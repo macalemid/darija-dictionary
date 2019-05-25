@@ -1,7 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
         <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ object.author }}</a>
@@ -13,10 +12,10 @@
               {% endif %}
             </div>
 
-            <h2 class="article-title"> {{ object.darija }} </h2>
-            <h2 class="article-title"> {{ object.arabic }} </h2>
-            <h2 class="article-title"> {{ object.english }} </h2>
-            <p class="article-content">{{ object.explanation }}</p>
+            <h2 class="article-title">Darija: {{ object.darija }} </h2>
+            <h2 class="article-title">Fusha: {{ object.arabic }} </h2>
+            <h2 class="article-title">English: {{ object.english }} </h2>
+            <p class="article-content">Explanation: {{ object.explanation }}</p>
           </div>
         </article>
 {% endblock content %}
