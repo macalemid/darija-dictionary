@@ -16,12 +16,11 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-             <!-- <big class="text-muted"> Darija: {{ word.darija }}</big> -->
               <h2><a class="article-title" href="{% url 'word-detail' word.id %}">Darija: {{ word.darija }}</a></h2>
 
             </div>
-            <h2><a>English: {{ word.arabic }}</a></h2>
-            <h2><a>Arabic: {{ word.english }}</a></h2>
+            <h2><a>English: {{ word.english }}</a></h2>
+            <h2><a>Arabic: {{ word.arabic }}</a></h2>
             <p class="article-content">{{ word.description }}</p>
           </div>
         </article>
