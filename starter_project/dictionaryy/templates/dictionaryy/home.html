@@ -12,16 +12,16 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    {% for word in words %}
+    {% for dict in dicts %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <h2><a class="article-title" href="{% url 'word-detail' word.id %}">Darija: {{ word.darija }}</a></h2>
-
+              <h2><a>Darija: {{ dict.get_darija.word }}</a></h2>
+              
             </div>
-            <h2><a>English: {{ word.english }}</a></h2>
-            <h2><a>Arabic: {{ word.arabic }}</a></h2>
-            <p class="article-content">{{ word.description }}</p>
+            <h2><a>English: {{ dict.get_english.word }}</a></h2>
+            <h2><a>Arabic: {{ dict.get_arabic.word }}</a></h2>
+            <p class="article-content">{{ dict.description }}</p>
           </div>
         </article>
     {% endfor %}
