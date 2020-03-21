@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class Word(models.Model):
-	pass
+
+#class Word(models.Model):
+#	pass
 
 class WordD(models.Model):
 	LANGUAGES = [
@@ -19,7 +20,7 @@ class WordD(models.Model):
 	audio = models.FileField(upload_to='audio/')
 
 	def __str__(self):
-		return self.word
+		return str(self.word)
 
 class Dictionary(models.Model):
 	words = models.ManyToManyField(WordD)
@@ -42,9 +43,7 @@ class Dictionary(models.Model):
 		return self.words.filter(language='E').first()
 
 	def __str__(self):
-		return self.explanation
+		return str(self.get_darija())
 	
 	def get_absolute_url(self):
 		return reverse('word-detail', kwargs={'pk': self.pk})
-
-	

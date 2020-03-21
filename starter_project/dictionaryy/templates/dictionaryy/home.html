@@ -16,7 +16,7 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <h2><a>Darija: {{ dict.get_darija.word }}</a></h2>
+              <h2><a href= "{% url 'word-detail' dict.id %}" >Darija: {{ dict.get_darija.word }}</a></h2>
               
             </div>
             <h2><a>English: {{ dict.get_english.word }}</a></h2>
