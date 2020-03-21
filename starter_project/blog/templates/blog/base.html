@@ -25,7 +25,7 @@
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	      </button>
-	      <div class="collapse navbar-collapse" id="navbarToggle">
+	      <div class="collapse navbar-collapse class="pagination id="navbarToggle">
 	        <div class="navbar-nav mr-auto">
 	          <a class="nav-item nav-link" href="{% url 'dictionary' %}">Dictionary</a>
 	          <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
@@ -36,7 +36,7 @@
 	        <div class="navbar-nav">
 	        	{% if user.is_authenticated %}
 	        		 <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a> 
-	        		<a>Add Word</a>
+	        		<a class="nav-item nav-link" href="{% url 'new-word' %}">Add Word</a>
 
 	        		<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
 	        		<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
