@@ -1,47 +1,85 @@
-from django.shortcuts import render, redirect
-from .models import Dictionary, WordD
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import WordForm
+from django.core.paginator import Paginator
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from .models import Dictionary
+from users.models import Profile
+from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
-from django.views.generic import DetailView
+from django.views.generic import (
+	ListView,
+	DetailView,
+	CreateView,
+	UpdateView,
+	DeleteView,
+	)
+	
+def about(request):
+	return render(request, 'about.html', {'title': 'About'})
+
+def dictionary(request):
+	dictionaries = Dictionary.objects.all()
+	if request.GET:
+		if request.GET.get('english'):
+			dictionaries =  dictionaries.order_by('english')
+		elif request.GET.get('darija'):
+			dictionaries = dictionaries.order_by('darija') 
+		elif request.GET.get('arabic'):
+			dictionaries = Dictionary.objects.order_by('arabic')
+		elif request.GET.get('q'):
+			query = request.GET.get('q')
+			dictionaries = dictionaries.filter( Q(darija__icontains=query) | Q(arabic__icontains=query) | Q(english__icontains=query))
+	paginator = Paginator(dictionaries, 25)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+	return render(request, 'dictionaryy/dictionary.html', {'page_obj': page_obj})
+
+def home(request):
+	top_users = Profile.objects.all().order_by('-score')[:10]
+	return render(request, 'dictionaryy/home.html', {'top_users': top_users})
+
+class DictionaryListView(ListView):
+	model = Dictionary
+	template_name = 'dictionaryy/home.html'
+	paginate_by = 3
+	context_object_name = 'dicts'
+
+class DictionaryCreateView(LoginRequiredMixin, CreateView):
+	model = Dictionary
+	fields = ['darija', 'arabic', 'english']
+	def form_valid(self, form):
+		auth = self.request.user
+		form.instance.user = auth
+		form.instance.author = auth
+		form.save()
+		Profile.objects.filter(user=auth).first().add1()
+		return super().form_valid(form)
+
+class DictionaryDetailView(DetailView):
+	model = Dictionary
+
+class DictionaryUpdateView(LoginRequiredMixin, UpdateView):
+	model = Dictionary
+	fields = ['darija', 'arabic', 'english']
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+
+class DictionaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+	model = Dictionary
+	success_url = '/'
 	
 
-from dictionaryy.models import Dictionary, WordD
-def home(request):
-	dicts = Dictionary.objects.all()
-	"""
-	if('search' in request.GET):
-		search_term = request.GET['search']
-		words = Word.objects.filter(darija__contains=search_term)
-	"""
-	context = {
-		'dicts': dicts
-	}
-	return render(request, 'dictionaryy/home.html', context)
+	def delete(self, request, *args, **kwargs):
+		Profile.objects.filter(user=self.request.user).first().sub1()
+		self.object = self.get_object()
+		success_url = self.get_success_url()
+		self.object.delete()
+		return HttpResponseRedirect(success_url)
 
-def make_word(request):
-	if request.method == 'POST':
-		form = WordForm(request.POST)
-		if form.is_valid():
-			darija = WordD(language='D', word= form.cleaned_data['darija'])
-			arabic = WordD(language='A', word= form.cleaned_data['arabic'])
-			english = WordD(language='E', word= form.cleaned_data['english'])
-			diction = Dictionary(explanation=form.cleaned_data['explanation'])
-			
-			
-			darija.save()
-			arabic.save()
-			english.save()
-			diction.save()
+	def test_func(self):
+		return True
 
-
-			diction.words.add(darija, arabic, english)
-			#add user to diction here
-			return redirect('dictionary')
-			#return reverse('word-detail', kwargs={'pk': diction.pk})
-	else:
-		form = WordForm()
-	return render(request, 'dictionaryy/dictionary_form.html', {'form': form})
-
-class WordDetailView(DetailView):
-	model = Dictionary
+def contactView(request):
+	return render(request, 'dictionaryy/contact.html')

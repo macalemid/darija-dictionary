@@ -16,14 +16,18 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jhq9@a_o&g9yguwn*&3yy&bn8q%2y=p=t-q3p&#n_1u^*gus76'
+#SECRET_KEY = 'jhq9@a_o&g9yguwn*&3yy&bn8q%2y=p=t-q3p&#n_1u^*gus76'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'jhq9@a_o&g9yguwn*&3yy&bn8q%2y=p=t-q3p&#n_1u^*gus76')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+#export DJANGO_DEBUG=False
 
 ALLOWED_HOSTS = []
 
@@ -33,7 +37,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dictionaryy.apps.DictionaryyConfig',
     'users.apps.UsersConfig',
-    'blog.apps.BlogConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,7 +128,7 @@ STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_REDIRECT_URL = 'dictionary'
 
 LOGIN_URL = 'login'
 
