@@ -1,0 +1,74 @@
+{% extends "dictionaryy/base.html" %}
+{% block content %}
+
+
+<style> 
+button.filter-button{
+ background:none;
+ color:white;
+ padding:0;
+ border:none;
+ font-family: ariel, sans-serif; 
+ color: #069;
+ text-decoration: underline; 
+}
+</style>
+    <form method="get" class="form-inline my-2 my-lg-1" style="padding-bottom: 30px;">
+      <input 
+      class="form-control mr-sm-2" 
+      type="search" 
+      placeholder="Search" 
+      aria-label="Search"
+      name="q" 
+      >
+      <button class="btn btn-primary my-2 my-sm-0" type="submit" style="background:rgb(234, 159, 41); border-color: rgb(234, 159, 41);">Search</button>
+    </form>
+
+    {% for dict in page_obj %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <h2><a href= "{% url 'dictionary-detail' dict.id %}" style="color:rgb(117, 180, 197);" >Darija: {{ dict.darija }}</a></h2>
+              
+            </div>
+            <h2><a>English: {{ dict.english }}</a></h2>
+            <h2><a>Arabic: {{ dict.arabic }}</a></h2>
+          </div>
+        </article>
+    {% endfor %}
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+    </div>
+      <div class="col-md-4">
+        - <div class="content-section">
+          <h3>Filters</h3>
+          <p class='text-muted'>Filter how you want the content to be displayed
+            <ul class="list-group"> 
+              <form>
+                <button class="filter-button" type="submit" value="submit" id="english" name="english"> Alphabetical by English</button>
+                <button class="filter-button" type="submit" value="submit" id="darija" name="darija"> Alphabetical by Darija</button>
+                <button class="filter-button" type="submit" value="submit" id="arabic" name="arabic"> Alphabetical by Arabic</button>
+            </form>
+           </ul> 
+          </p>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,28 +1,37 @@
-{% extends "blog/base.html" %}
+{% extends "dictionaryy/base.html" %}
 {% block content %}
+	<h1>Help build a dictionary!</h1>
+	<p>Moroccan Arabic is one of the more difficult dialects of Arabic to learn. This is in part due to the fact that the dialect differs greatly from standard Arabic, but it is not helped by the fact that there are very few online resources to help learn the dialect. This dictionary aims to solve that problem.
+	</p>
+	<p>
+	You can search through all of the words that have already been added, and you can easily create and account to add and edit existing words.
+	</p>
+	<p>
+	At the moment the website only supports basic search functions and only has the Darija/MSA/English words together. However if there is a feature that you would like to see send us an email and we'll look into adding it! Hope you enjoy!
+	</p>
+	
 
+	</div>
+      <div class="col-md-4">
+        - <div class="content-section" style="text-align:center;">
+          <h3>Top Contributors</h3>
+          <p class='text-muted'>
+            <ul class="list-group"> 
+        	 {% for user in top_users %}
+        	  <article class="media content-section">
+          	   <div class="media-body">
+            	 <div class="article-metadata">
+              	  <h5 style="color:rgb(117, 180, 197);">Username: {{ user.user.username }}</h5>
+            	 </div>
+            	 <h5>Score: {{ user.score }}</h5>
+          	   </div>
+       		  </article>
+    		 {% endfor %}
+           </ul> 
+          </p>
+        </div>
+      </div>
+    </div>
 
-    <form class="form-inline my-2 my-lg-1">
-      <input 
-      class="form-control mr-sm-2" 
-      type="search" 
-      placeholder="Search" 
-      aria-label="Search"
-      name="search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-    {% for dict in dicts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <h2><a href= "{% url 'word-detail' dict.id %}" >Darija: {{ dict.get_darija.word }}</a></h2>
-              
-            </div>
-            <h2><a>English: {{ dict.get_english.word }}</a></h2>
-            <h2><a>Arabic: {{ dict.get_arabic.word }}</a></h2>
-            <p class="article-content">{{ dict.description }}</p>
-          </div>
-        </article>
-    {% endfor %}
 {% endblock content %}
+

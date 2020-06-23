@@ -1,20 +1,22 @@
-{% extends "blog/base.html" %}
+{% extends "dictionaryy/base.html" %}
 {% block content %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <!--<a class="mr-2" href="#">{{ object.author }}</a> -->
-              <!--{% if object.author == user %} -->
               <div>
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}"> Update </a>
-              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}"> Delete </a>
+                {% if user.is_authenticated %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'dictionary-update' object.id %}"> Update </a>
+              {% endif%}
+              {% if object.user == user %}
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'dictionary-delete' object.id %}"> Delete </a>
+              {% endif %}
               </div>
-              <!--{% endif %} -->
+
             </div>
 
-            <h2 class="article-title"> {{ object.get_darija }} </h2>
-            <p class="article-content">{{ object.get_arabic }}</p>
-            <p class="article-content">{{ object.get_english }}</p>
+            <h2 class="article-title"> {{ object.darija }} </h2>
+            <p class="article-content">{{ object.arabic }}</p>
+            <p class="article-content">{{ object.english }}</p>
 
           </div>
         </article>

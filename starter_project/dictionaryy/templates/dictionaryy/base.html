@@ -9,77 +9,56 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dictionaryy/main.css' %}">
     
 	{% if title %}
-		<title> Blog - {{ title }} </title>
+		<title> Moroccan Dictionary - {{ title }} </title>
 	{% else %}
-		<title> Blog </title>
+		<title> Moroccan Dictionary </title>
 	{% endif %}
 </head>
-<body>
+<body style="background:rgb(117, 180, 197);">
 	<header class="site-header">
-	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="background:rgb(117, 180, 197);">
 	    <div class="container">
-	      <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Home</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	      </button>
 	      <div class="collapse navbar-collapse class="pagination id="navbarToggle">
 	        <div class="navbar-nav mr-auto">
-	          <a class="nav-item nav-link" href="{% url 'dictionary' %}">Dictionary</a>
-	          <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
-	          <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-	          
+	        <button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197);" onclick="window.location.href = {% url 'home' %};">Home</button>
+	        <button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197);" onclick="window.location.href = {% url 'dictionary' %};">Dictionary</button>
+	        <button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197);" onclick="window.location.href = {% url 'contact' %};">Contact</button>
 	        </div>
 	        <!-- Navbar Right Side -->
 	        <div class="navbar-nav">
 	        	{% if user.is_authenticated %}
-	        		 <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a> 
-	        		<a class="nav-item nav-link" href="{% url 'new-word' %}">Add Word</a>
-
-	        		<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-	        		<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+	        		<button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197); outline:rgb(234, 159, 41);" onclick="window.location.href = {% url 'dictionary-create' %};">Add Word</button>
+	        		<button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197); outline:none;" onclick="window.location.href = {% url 'logout' %};">Logout</button>
+	        		<button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197); outline:none;" onclick="window.location.href = {% url 'profile' %};">Profile</button>
 	        	{% else %}
-		          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-		          <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-
+	        	<button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197); outline:rgb(234, 159, 41);" onclick="window.location.href = {% url 'login' %};">login</button>
+	        	<button class="btn btn-primary" style="background:rgb(234, 159, 41); border-color: rgb(117, 180, 197);" onclick="window.location.href = {% url 'register' %};">Register</button>
 	          {% endif %}
 	        </div>
 	      </div>
 	    </div>
 	  </nav>
 	</header>
-
 	<main role="main" class="container">
 	  <div class="row">
 	    <div class="col-md-8">
 	    {% if messages %}
-	    	{% for message in messages %}
+	    {% for message in messages %}
 	    	<div class="alert alert-{{ messae.tags }}">
 	    		{{ message }}
 	    	</div>>
 	    	{% endfor %}
-	    {% endif %}
+	    	{% endif %}
 	    {% block content %}{% endblock %}
-	    
-	    </div>
-	    <div class="col-md-4">
-	      <div class="content-section">
-	        <h3>Our Sidebar</h3>
-	        <p class='text-muted'>You can put any information here you'd like.
-	          <ul class="list-group">
-	            <li class="list-group-item list-group-item-light">Latest Posts</li>
-	            <li class="list-group-item list-group-item-light">Announcements</li>
-	            <li class="list-group-item list-group-item-light">Calendars</li>
-	            <li class="list-group-item list-group-item-light">etc</li>
-	          </ul>
-	        </p>
-	      </div>
-	    </div>
-	  </div>
 	</main>
 
+	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
