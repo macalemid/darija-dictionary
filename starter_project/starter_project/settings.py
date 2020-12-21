@@ -12,24 +12,22 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+import json
+
+with open('/etc/config.json') as config_file:
+        config = json.load(config_file)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config['SECRET_KEY'])
 
-
-# Quick-start development settings - unsuitable for production
+ #Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'jhq9@a_o&g9yguwn*&3yy&bn8q%2y=p=t-q3p&#n_1u^*gus76'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-#export DJANGO_DEBUG=False
+DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -43,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware'
 ]
 
 ROOT_URLCONF = 'starter_project.urls'
