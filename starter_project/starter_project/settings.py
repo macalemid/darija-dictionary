@@ -11,26 +11,23 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 import json
 
 with open('/etc/config.json') as config_file:
-        config = json.load(config_file)
+    config = json.load(config_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config['SECRET_KEY'])
 
- #Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', config['ALLOWED_HOSTS'])
 
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
 # Application definition
-
 INSTALLED_APPS = [
     'dictionaryy.apps.DictionaryyConfig',
     'users.apps.UsersConfig',
@@ -75,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'starter_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -85,7 +81,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -123,6 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
