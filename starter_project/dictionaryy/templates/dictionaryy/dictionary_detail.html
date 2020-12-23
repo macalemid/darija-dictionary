@@ -4,7 +4,7 @@
           <div class="media-body">
             <div class="article-metadata">
               <div>
-                {% if user.is_authenticated %}
+                {% if object.user == user %}
               <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'dictionary-update' object.id %}"> Update </a>
               {% endif%}
               {% if object.user == user %}
