@@ -25,8 +25,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config['SECRET_KEY'])
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', config['ALLOWED_HOSTS'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
+ 
 # Application definition
 INSTALLED_APPS = [
     'dictionaryy.apps.DictionaryyConfig',

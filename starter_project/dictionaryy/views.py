@@ -28,7 +28,7 @@ def dictionary(request):
 			dictionaries = Dictionary.objects.order_by('arabic')
 		elif request.GET.get('q'):
 			query = request.GET.get('q')
-			dictionaries = dictionaries.filter( Q(darija__icontains=query) | Q(arabic__icontains=query) | Q(english__icontains=query))
+			dictionaries = dictionaries.filter( Q(darija__icontains=query) | Q(arabic__icontains=query) | Q(english__icontains=query)).order_by('-id')
 	paginator = Paginator(dictionaries, 25)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
