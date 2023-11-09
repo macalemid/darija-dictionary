@@ -30,6 +30,9 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', config['ALLOWED_HOSTS'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# Default primary key
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
  
 # Application definition
 INSTALLED_APPS = [
