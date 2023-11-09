@@ -3,9 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Dictionary
 from users.models import Profile
-from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
+from .search import filter_words_based_on_search_input
 from django.views.generic import (
 	ListView,
 	DetailView,
@@ -27,8 +27,7 @@ def dictionary(request):
 		elif request.GET.get('arabic'):
 			dictionaries = Dictionary.objects.order_by('arabic')
 		elif request.GET.get('q'):
-			query = request.GET.get('q')
-			dictionaries = dictionaries.filter( Q(darija__icontains=query) | Q(arabic__icontains=query) | Q(english__icontains=query)).order_by('-id')
+			dictionaries = filter_words_based_on_search_input(request.GET.get('q'), dictionaries)
 	paginator = Paginator(dictionaries, 25)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)

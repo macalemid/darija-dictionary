@@ -10,4 +10,4 @@ path('<int:pk>/update/', views.DictionaryUpdateView.as_view(), name='dictionary-
 path('<int:pk>/', views.DictionaryDetailView.as_view(), name='dictionary-detail'),
 path('<int:pk>/delete/', views.DictionaryDeleteView.as_view(), name='dictionary-delete'),
 path('contact/', views.contactView, name='contact'),
-    ]
+]
